@@ -1,9 +1,10 @@
 import { AuthService } from "src/utils/axios/auth";
 
-export function getUsers() {
+export function getUsers(params) {
   return AuthService({
     url: "/users",
     method: "get",
+    params: params
   });
 }
 

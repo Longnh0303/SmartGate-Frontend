@@ -1,8 +1,5 @@
 // ** React Imports
-import { useState, useEffect, useCallback } from "react";
-
-// ** Next Imports
-import Link from "next/link";
+import { useState, useEffect, useCallback,useRef } from "react";
 
 // ** MUI Imports
 import Box from "@mui/material/Box";
@@ -14,22 +11,14 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
 import { DataGrid } from "@mui/x-data-grid";
+import UserDialog from './components/Dialog'
 
 // ** Icon Imports
 import Icon from "src/@core/components/icon";
 
-// ** Store Imports
-import { useDispatch } from "react-redux";
-
 // ** Custom Components Imports
-import CustomChip from "src/@core/components/mui/chip";
 import CustomAvatar from "src/@core/components/mui/avatar";
-import CustomTextField from "src/@core/components/mui/text-field";
-
-// ** Utils Import
-import { getInitials } from "src/@core/utils/get-initials";
 
 //Api imports
 import { getUsers } from "src/api/user";
@@ -40,39 +29,35 @@ import AddUserDrawer from "./components/AddUserDrawer";
 
 // ** renders client column
 const userRoleObj = {
-  manager: { icon: "tabler:device-laptop", color: "secondary" },
+  manager: { icon: "tabler:device-laptop", color: "success" },
   operator: { icon: "tabler:chart-pie-2", color: "primary" },
 };
 
 // ** renders client column
 const renderClient = (row) => {
-  if (row.avatar) {
+  if (row.role === 'manager') {
     return (
-      <CustomAvatar src={row.avatar} sx={{ mr: 2.5, width: 38, height: 38 }} />
+      <CustomAvatar
+      src='/images/avatars/manager.png'
+      sx={{ width: 26, height: 26 }}
+      alt={row.name}
+      variant='square'
+    />
+     
     );
   } else {
     return (
       <CustomAvatar
-        skin="light"
-        color={row.avatarColor}
-        sx={{
-          mr: 2.5,
-          width: 38,
-          height: 38,
-          fontWeight: 500,
-          fontSize: (theme) => theme.typography.body1.fontSize,
-        }}
-      >
-        {getInitials(row.username ? row.username : "John Doe")}
-      </CustomAvatar>
+      src='/images/avatars/operator.png'
+      sx={{ width: 26, height: 26 }}
+      alt={row.name}
+      variant='square'
+    />
     );
   }
 };
 
 const RowOptions = ({ id }) => {
-  // ** Hooks
-  const dispatch = useDispatch();
-
   // ** State
   const [anchorEl, setAnchorEl] = useState(null);
   const rowOptionsOpen = Boolean(anchorEl);
@@ -86,10 +71,11 @@ const RowOptions = ({ id }) => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteUser(id));
     handleRowOptionsClose();
   };
-
+  const handleUpdate = () => {
+    handleRowOptionsClose();
+  };
   return (
     <>
       <IconButton size="small" onClick={handleRowOptionsClick}>
@@ -110,22 +96,13 @@ const RowOptions = ({ id }) => {
         }}
         PaperProps={{ style: { minWidth: "8rem" } }}
       >
-        <MenuItem
-          component={Link}
-          sx={{ "& svg": { mr: 2 } }}
-          href="/apps/user/view/account"
-          onClick={handleRowOptionsClose}
-        >
-          <Icon icon="tabler:eye" fontSize={20} />
-          View
-        </MenuItem>
-        <MenuItem onClick={handleRowOptionsClose} sx={{ "& svg": { mr: 2 } }}>
+        <MenuItem onClick={handleUpdate} sx={{ "& svg": { mr: 2 } }}>
           <Icon icon="tabler:edit" fontSize={20} />
-          Edit
+          Cập nhật
         </MenuItem>
         <MenuItem onClick={handleDelete} sx={{ "& svg": { mr: 2 } }}>
           <Icon icon="tabler:trash" fontSize={20} />
-          Delete
+          Xoá
         </MenuItem>
       </Menu>
     </>
@@ -135,13 +112,15 @@ const RowOptions = ({ id }) => {
 const columns = [
   {
     flex: 0.25,
-    minWidth: 280,
+    minWidth: 200,
     field: "username",
-    headerName: "User Name",
+    headerName: "Tên người dùng",
     renderCell: ({ row }) => {
       return (
         <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{mr:2.5,width: 38 , height:38 ,borderRadius:'50%', backgroundColor:'#ececec',display: "flex", alignItems: "center", justifyContent:'center'}}>
           {renderClient(row)}
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -164,8 +143,8 @@ const columns = [
     },
   },
   {
-    flex: 0.15,
-    minWidth: 190,
+    flex: 0.25,
+    minWidth:200,
     field: "email",
     headerName: "Email",
     renderCell: ({ row }) => {
@@ -186,7 +165,7 @@ const columns = [
     flex: 0.15,
     field: "role",
     minWidth: 170,
-    headerName: "Role",
+    headerName: "Vai trò",
     renderCell: ({ row }) => {
       return (
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -239,7 +218,7 @@ const columns = [
     minWidth: 100,
     sortable: false,
     field: "actions",
-    headerName: "Actions",
+    headerName: "Thao tác",
     renderCell: ({ row }) => <RowOptions id={row.id} />,
   },
 ];
@@ -249,36 +228,43 @@ const UserList = () => {
   const [value, setValue] = useState("");
   const [addUserOpen, setAddUserOpen] = useState(false);
   const [rowData, setRowData] = useState([]);
+  const [openUpdate, setOpenUpdate] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 10,
   });
+  const valueRef = useRef(null)
 
   // ** Hooks
   const fetchData = useCallback(async () => {
     try {
-      const response = await getUsers();
+      const params = {searchTerm: valueRef.current}
+      const response = await getUsers(params);
       setRowData(response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [valueRef.current]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  const handleFilter = useCallback((val) => {
-    setValue(val);
-  }, []);
+  const handleFilter = useCallback(val => {
+    if (/^[a-zA-Z0-9 ]*$/.test(val)) {
+      setValue(val)
+      valueRef.current = val
+    }
+  }, [])
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen);
 
   return (
     <Grid container spacing={6.5}>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title="Search Filters" />
+          <CardHeader title="Danh sách người dùng" />
           <Divider sx={{ m: "0 !important" }} />
           <TableHeader
             value={value}
@@ -297,8 +283,15 @@ const UserList = () => {
           />
         </Card>
       </Grid>
-
-      <AddUserDrawer open={addUserOpen} toggle={toggleAddUserDrawer} />
+      <AddUserDrawer fetchData={fetchData} open={addUserOpen} toggle={toggleAddUserDrawer} />
+      <UserDialog
+        openUpdate={openUpdate}
+        toggleUpdate={setOpenUpdate}
+        row={rowData}
+        refresh={fetchData}
+        openDelete={openDelete}
+        toggleDelete={setOpenDelete}
+      ></UserDialog>
     </Grid>
   );
 };
