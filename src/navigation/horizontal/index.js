@@ -1,21 +1,21 @@
 const navigation = () => [
   {
-    title: 'Home',
-    path: '/home',
-    icon: 'tabler:smart-home',
+    title: "Home",
+    path: "/home",
+    icon: "tabler:smart-home",
   },
   {
-    title: 'Second Page',
-    path: '/second-page',
-    icon: 'tabler:mail',
+    title: "Quản lý tài khoản",
+    path: "/user-page",
+    icon: "tabler:user",
   },
   {
-    path: '/acl',
-    action: 'read',
-    subject: 'acl-page',
-    title: 'Access Control',
-    icon: 'tabler:shield',
-  }
-]
+    path: "/acl",
+    action: "read",
+    subject: "acl-page",
+    title: "Access Control",
+    icon: "tabler:shield",
+  },
+];
 
-export default navigation
+export default navigation;
