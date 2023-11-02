@@ -82,15 +82,15 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 const schema = yup.object().shape({
   email: yup
     .string()
-    .email("Email must be valid email")
-    .required("Email is required"),
+    .email("Email không hợp lệ")
+    .required("Email là trường bắt buộc"),
   password: yup
     .string()
-    .required("Password is required")
-    .min(6, "Password must have at least 6 characters")
+    .required("Mật khẩu là trường bắt buộc")
+    .min(6, "Mật khẩu phải có ít nhất 6 kí tự")
     .matches(
       VALID_PASSWORD_REGEX,
-      "Password must have at least 6 characters, 1 lowercase letter and 1 number"
+      "Mật khẩu phải có ít nhất 6 kí tự, 1 kí tự thường và 1 chữ số"
     ),
 });
 
