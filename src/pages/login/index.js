@@ -162,10 +162,10 @@ const LoginPage = () => {
           <Box sx={{ width: "100%", maxWidth: 400 }}>
             <Box sx={{ my: 6 }}>
               <Typography variant="h3" sx={{ mb: 1.5 }}>
-                {`Welcome to ${themeConfig.templateName}! 👋🏻`}
+                {`Chào mừng bạn đến với hệ thống ${themeConfig.templateName}! 👋🏻`}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                Please sign-in to your account and start the adventure
+                Vui lòng đăng nhập để sử dụng hệ thống
               </Typography>
             </Box>
             <form
@@ -204,7 +204,7 @@ const LoginPage = () => {
                       fullWidth
                       value={value}
                       onBlur={onBlur}
-                      label="Password"
+                      label="Mật khẩu"
                       onChange={onChange}
                       id="auth-login-v2-password"
                       error={Boolean(errors.password)}
@@ -249,7 +249,7 @@ const LoginPage = () => {
                 variant="contained"
                 sx={{ mb: 4 }}
               >
-                Login
+                Đăng nhập
               </Button>
             </form>
           </Box>

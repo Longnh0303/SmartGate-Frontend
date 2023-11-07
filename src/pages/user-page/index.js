@@ -26,11 +26,12 @@ import { getUsers } from "src/api/user";
 // ** Custom Table Components Imports
 import TableHeader from "./components/TableHeader";
 import AddUserDrawer from "./components/AddUserDrawer";
+import { convertTime } from "src/utils/base";
 
 // ** renders client column
 const userRoleObj = {
-  manager: { icon: "tabler:device-laptop", color: "success" },
-  operator: { icon: "tabler:chart-pie-2", color: "primary" },
+  manager: { title: "Quản lý", icon: "tabler:device-laptop", color: "success" },
+  operator: { title: "Vận hành", icon: "tabler:chart-pie-2", color: "primary" },
 };
 
 // ** renders client column
@@ -39,18 +40,16 @@ const renderClient = (row) => {
     return (
       <CustomAvatar
         src="/images/avatars/manager.png"
-        sx={{ width: 26, height: 26 }}
+        sx={{ width: 38, height: 38 }}
         alt={row.name}
-        variant="square"
       />
     );
   } else {
     return (
       <CustomAvatar
         src="/images/avatars/operator.png"
-        sx={{ width: 26, height: 26 }}
+        sx={{ width: 38, height: 38 }}
         alt={row.name}
-        variant="square"
       />
     );
   }
@@ -218,7 +217,7 @@ const UserList = () => {
                 textTransform: "capitalize",
               }}
             >
-              {row.role}
+              {userRoleObj[row.role].title || "Vận hành"}
             </Typography>
           </Box>
         );
@@ -230,10 +229,6 @@ const UserList = () => {
       field: "createdAt", // Corrected field name
       headerName: "Ngày tạo",
       renderCell: ({ row }) => {
-        const date = new Date(row.createdAt);
-        const formattedDate = `${date.getDate()}/${
-          date.getMonth() + 1
-        }/${date.getFullYear()}`;
         return (
           <Typography
             noWrap
@@ -242,7 +237,7 @@ const UserList = () => {
               textDecoration: "none",
             }}
           >
-            {formattedDate}
+            {convertTime(row.createdAt)}
           </Typography>
         );
       },
