@@ -7,15 +7,8 @@ const navigation = () => {
     },
     {
       title: "Quản lý tài khoản",
-      path: "/user-page",
+      path: "/user",
       icon: "tabler:user",
-    },
-    {
-      path: "/acl",
-      action: "read",
-      subject: "acl-page",
-      title: "Access Control",
-      icon: "tabler:shield",
     },
   ];
 };
