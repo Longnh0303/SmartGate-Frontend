@@ -32,6 +32,7 @@ const userRoleObj = {
   teacher: { title: "Giảng viên" },
   student: { title: "Sinh viên" },
   employee: { title: "Nhân viên" },
+  guest: { title: "Khách" },
 };
 
 const statusObj = {

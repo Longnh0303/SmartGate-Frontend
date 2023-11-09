@@ -36,7 +36,6 @@ const Header = styled(Box)(({ theme }) => ({
 const schema = yup.object().shape({
   name: yup
     .string()
-    .required("Tên là trường bắt buộc")
     .min(3, "Tên phải có ít nhất 3 kí tự")
     .max(30, "Tên tối đa chỉ chứa 30 kí tự"),
   cardId: yup
@@ -46,7 +45,6 @@ const schema = yup.object().shape({
     .max(15, "Id của thẻ tối đa chỉ chứa 15 kí tự"),
   usercode: yup
     .string()
-    .required("Mã sinh viên/nhân viên là trường bắt buộc")
     .min(6, "Mã sinh viên/nhân viên  phải có ít nhất 6 kí tự")
     .max(15, "Mã sinh viên/nhân viên tối đa chỉ chứa 15 kí tự"),
   department: yup
@@ -66,6 +64,19 @@ const schema = yup.object().shape({
     .min(6, "Biển số xe phải có ít nhất 6 kí tự")
     .max(15, "Biển số xe tối đa chỉ chứa 15 kí tự"),
 });
+
+//schema riêng cho trường hợp role = "guest"
+const guestSchema = yup.object().shape({
+  cardId: schema.fields.cardId,
+});
+
+const getValidationSchema = (role) => {
+  if (role === "guest") {
+    return guestSchema;
+  } else {
+    return schema;
+  }
+};
 
 const defaultValues = {
   cardId: "",
@@ -95,7 +106,7 @@ const SidebarAddUser = (props) => {
   } = useForm({
     defaultValues,
     mode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(getValidationSchema(role)),
   });
 
   const onSubmit = useCallback(
@@ -109,6 +120,7 @@ const SidebarAddUser = (props) => {
         await createRfid(combinedData).then(() => {
           toggle();
           reset();
+          setRole("student");
           setTimeout(function () {
             setLoading(false);
           }, 500);
@@ -299,6 +311,7 @@ const SidebarAddUser = (props) => {
             <MenuItem value="student">Sinh viên</MenuItem>
             <MenuItem value="teacher">Giảng viên</MenuItem>
             <MenuItem value="employee">Nhân viên</MenuItem>
+            <MenuItem value="guest">Khách</MenuItem>
           </CustomTextField>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <LoadingButton

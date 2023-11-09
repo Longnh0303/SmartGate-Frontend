@@ -27,6 +27,7 @@ const UserDialog = (props) => {
     openDelete = false,
     toggleDelete = () => {},
   } = props;
+
   const schema = yup.object().shape({
     name: yup
       .string()
@@ -66,6 +67,19 @@ const UserDialog = (props) => {
       .max(100000, "Số dư phải nhỏ hơn hoặc bằng 100000"),
   });
 
+  //schema riêng cho trường hợp role = "guest"
+  const guestSchema = yup.object().shape({
+    cardId: schema.fields.cardId,
+  });
+
+  const getValidationSchema = (role) => {
+    if (role === "guest") {
+      return guestSchema;
+    } else {
+      return schema;
+    }
+  };
+
   const defaultValues = {
     name: row.name || "",
     usercode: row.usercode || "",
@@ -78,6 +92,8 @@ const UserDialog = (props) => {
     role: row.role || "student",
   };
 
+  const [tempRole, setTempRole] = useState(row.role);
+
   const {
     control,
     handleSubmit,
@@ -86,7 +102,7 @@ const UserDialog = (props) => {
   } = useForm({
     defaultValues,
     mode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(getValidationSchema(tempRole)),
   });
 
   useEffect(() => {
@@ -101,6 +117,7 @@ const UserDialog = (props) => {
       licensePlates: row.licensePlates || "",
       role: row.role || "student",
     });
+    setTempRole(row.role);
   }, [row, reset]);
 
   const [loading, setLoading] = useState(false);
@@ -333,7 +350,10 @@ const UserDialog = (props) => {
                       value={value}
                       sx={{ mb: 4 }}
                       onBlur={onBlur}
-                      onChange={onChange}
+                      onChange={(event) => {
+                        setTempRole(event.target.value);
+                        onChange(event);
+                      }}
                       error={Boolean(errors.role)}
                       {...(errors.role && {
                         helperText: errors.role.message,
@@ -342,6 +362,7 @@ const UserDialog = (props) => {
                       <MenuItem value="student">Sinh viên</MenuItem>
                       <MenuItem value="teacher">Giảng viên</MenuItem>
                       <MenuItem value="employee">Nhân viên</MenuItem>
+                      <MenuItem value="guest">Khách</MenuItem>
                     </CustomTextField>
                   )}
                 />
