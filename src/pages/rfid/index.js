@@ -35,11 +35,6 @@ const userRoleObj = {
   guest: { title: "Khách" },
 };
 
-const statusObj = {
-  checkedOut: { title: "Đã ra" },
-  checkedIn: { title: "Đã vào" },
-};
-
 const RowOptions = ({ row, setRow, setOpenUpdate, setOpenDelete }) => {
   // ** State
   const [anchorEl, setAnchorEl] = useState(null);
@@ -99,7 +94,7 @@ const RfidList = () => {
   //Data column
   const columns = [
     {
-      flex: 0.15,
+      flex: 0.1,
       minWidth: 150,
       field: "cardId",
       headerName: "Id Thẻ",
@@ -118,7 +113,7 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
+      flex: 0.1,
       minWidth: 140,
       field: "balance",
       headerName: "Số dư",
@@ -137,8 +132,8 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
-      minWidth: 180,
+      flex: 0.1,
+      minWidth: 200,
       field: "name",
       headerName: "Chủ thẻ",
       renderCell: ({ row }) => {
@@ -156,12 +151,12 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
+      flex: 0.1,
       field: "role",
       minWidth: 120,
       align: "center",
       headerAlign: "center",
-      headerName: "Chức vụ",
+      headerName: "Loại thẻ",
       renderCell: ({ row }) => {
         return (
           <Typography
@@ -177,9 +172,9 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
+      flex: 0.1,
       field: "department",
-      minWidth: 230,
+      minWidth: 200,
       headerName: "Khoa/Phòng",
       renderCell: ({ row }) => {
         return (
@@ -196,9 +191,9 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
+      flex: 0.1,
       field: "usercode",
-      minWidth: 220,
+      minWidth: 160,
       headerName: "Mã sinh viên/nhân viên",
       renderCell: ({ row }) => {
         return (
@@ -215,9 +210,9 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
+      flex: 0.1,
       field: "carInfo",
-      minWidth: 260,
+      minWidth: 200,
       headerName: "Phương tiện",
       renderCell: ({ row }) => {
         return (
@@ -234,7 +229,7 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
+      flex: 0.1,
       field: "carColor",
       minWidth: 100,
       headerName: "Màu xe",
@@ -253,7 +248,7 @@ const RfidList = () => {
       },
     },
     {
-      flex: 0.15,
+      flex: 0.1,
       field: "licensePlates",
       minWidth: 140,
       headerName: "Biển số xe",
@@ -267,27 +262,6 @@ const RfidList = () => {
             }}
           >
             {row.licensePlates}
-          </Typography>
-        );
-      },
-    },
-    {
-      flex: 0.15,
-      field: "status",
-      align: "center",
-      headerAlign: "center",
-      minWidth: 120,
-      headerName: "Trạng thái",
-      renderCell: ({ row }) => {
-        return (
-          <Typography
-            noWrap
-            sx={{
-              fontWeight: 500,
-              textDecoration: "none",
-            }}
-          >
-            {statusObj[row.status].title}
           </Typography>
         );
       },

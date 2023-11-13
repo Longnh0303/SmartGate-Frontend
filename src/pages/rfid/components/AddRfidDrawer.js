@@ -57,7 +57,7 @@ const schema = yup.object().shape({
     .max(30, "Thông tin xe tối đa chỉ chứa 30 kí tự"),
   carColor: yup
     .string()
-    .min(3, "Màu xe phải có ít nhất 3 kí tự")
+    .min(2, "Màu xe phải có ít nhất 2 kí tự")
     .max(15, "Màu xe tối đa chỉ chứa 15 kí tự"),
   licensePlates: yup
     .string()
@@ -301,7 +301,7 @@ const SidebarAddUser = (props) => {
             fullWidth
             value={role}
             sx={{ mb: 4 }}
-            label="Chức vụ"
+            label="Loại thẻ"
             onChange={(e) => setRole(e.target.value)}
             SelectProps={{
               value: role,

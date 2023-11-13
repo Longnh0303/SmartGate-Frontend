@@ -15,6 +15,11 @@ const navigation = () => {
       path: "/rfid",
       icon: "tabler:id",
     },
+    {
+      title: "Lịch sử vào/ra",
+      path: "/history",
+      icon: "tabler:id",
+    },
   ];
 };
 
