@@ -18,9 +18,8 @@ const YourComponent = () => {
   };
 
   useEffect(() => {
-    // Lắng nghe sự kiện 'mqttMessage' từ server
+    // Lắng nghe sự kiện 'device_status' từ server
     socket.on("device_status", async (msg) => {
-      console.log(msg)
       switch (msg.type) {
         case "gate":
           setData(msg.data);
@@ -31,7 +30,6 @@ const YourComponent = () => {
             setCardInfo(null);
             const card = await getRfidByCardId(msg.data.cardId);
             setCardInfo(card);
-
             // Schedule the reset after 3 seconds
             setTimeout(() => {
               setCardInfo(null);
