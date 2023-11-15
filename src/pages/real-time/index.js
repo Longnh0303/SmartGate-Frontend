@@ -6,16 +6,21 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import Typography from "@mui/material/Typography";
-import { Grid, Card } from "@mui/material";
+import { Grid, Card, Button } from "@mui/material";
 
 const YourComponent = () => {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(null);
   const [cardInfo, setCardInfo] = useState(null);
 
+  const joinRoom = () => {
+    socket.emit("request-join-room", "24:dc:c3:a7:3a:78_status");
+  };
+
   useEffect(() => {
     // Lắng nghe sự kiện 'mqttMessage' từ server
-    socket.on("mqttMessage", async (msg) => {
+    socket.on("device_status", async (msg) => {
+      console.log(msg)
       switch (msg.type) {
         case "gate":
           setData(msg.data);
@@ -44,17 +49,20 @@ const YourComponent = () => {
     });
 
     return () => {
-      // Đảm bảo bạn "unsubscribe" khỏi sự kiện khi component bị unmount
-      socket.off("mqttMessage");
+      socket.disconnect();
     };
   }, []); // Chạy một lần khi component được mount
 
   return (
     <>
+      <Button onClick={joinRoom}>joinRoom</Button>
       {data && (
         <Grid container spacing={6}>
           <Grid item xs={12} sm={4}>
-            <Card></Card>
+            <Card>
+              <Typography>MAC: {status.mac}</Typography>
+              <Typography>Trạng thái: {status.status}</Typography>
+            </Card>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Card></Card>

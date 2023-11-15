@@ -78,7 +78,7 @@ const HistoryList = () => {
               textDecoration: "none",
             }}
           >
-            {userRoleObj[row.role].title}
+            {row.role? userRoleObj[row.role].title : ""}
           </Typography>
         );
       },
