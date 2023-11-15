@@ -30,3 +30,10 @@ export function deleteRfid(id) {
     method: "delete",
   });
 }
+
+export function getRfidByCardId(cardId) {
+  return AuthService({
+    url: `/rfid/card/${cardId}`,
+    method: "get",
+  });
+}

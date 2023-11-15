@@ -18,7 +18,17 @@ const navigation = () => {
     {
       title: "Lịch sử vào/ra",
       path: "/history",
-      icon: "tabler:id",
+      icon: "tabler:history",
+    },
+    {
+      title: "Giám sát hoạt động",
+      path: "/real-time",
+      icon: "tabler:device-tv",
+    },
+    {
+      title: "Quản lý thiết bị",
+      path: "/devices",
+      icon: "tabler:door-enter",
     },
   ];
 };
