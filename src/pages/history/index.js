@@ -206,11 +206,9 @@ const HistoryList = () => {
   }, [fetchData]);
 
   const handleFilter = useCallback((val) => {
-    if (/^[a-zA-Z0-9 ]*$/.test(val)) {
-      setValue(val);
-      valueRef.current = val;
-    }
-  }, []);
+    setValue(val);
+    valueRef.current = val;
+}, []);
 
   return (
     <Grid container spacing={6.5}>

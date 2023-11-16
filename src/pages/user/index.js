@@ -291,11 +291,10 @@ const UserList = () => {
   }, [fetchData]);
 
   const handleFilter = useCallback((val) => {
-    if (/^[a-zA-Z0-9 ]*$/.test(val)) {
       setValue(val);
       valueRef.current = val;
-    }
   }, []);
+  
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen);
 
   return (
