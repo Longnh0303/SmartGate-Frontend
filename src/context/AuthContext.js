@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 // ** Config
 import { logOut, login } from "src/api/auth";
-import { getUserById } from "src/api/user";
+import { getInfoAccount } from "src/api/auth";
 import jwt_decode from "jwt-decode";
 import {
   setAccessToken,
@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
       if (storedToken) {
         const userId = jwt_decode(storedToken).id;
         setLoading(true);
-        await getUserById(userId)
+        await getInfoAccount(userId)
           .then(async (response) => {
             setLoading(false);
             setUser({ ...response });

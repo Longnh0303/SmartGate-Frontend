@@ -235,4 +235,9 @@ const HistoryList = () => {
   );
 };
 
-export default HistoryList;
+HistoryList.acl = {
+  action: 'read',
+  subject: 'history-page'
+}
+
+export default HistoryList

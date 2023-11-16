@@ -23,7 +23,7 @@ const userRoleObj = {
   guest: { title: "Khách" },
 };
 
-const YourComponent = () => {
+const RealtimePage = () => {
 
 
   const [data, setData] = useState(null);
@@ -615,4 +615,9 @@ const YourComponent = () => {
   );
 };
 
-export default YourComponent;
+RealtimePage.acl = {
+  action: 'read',
+  subject: 'real-time-page'
+}
+
+export default RealtimePage

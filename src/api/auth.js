@@ -16,3 +16,10 @@ export function logOut(data) {
     data,
   });
 }
+
+export function getInfoAccount() {
+  return AuthService({
+    url: '/account',
+    method: 'get'
+  })
+}
