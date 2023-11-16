@@ -21,14 +21,14 @@ const navigation = () => {
       icon: "tabler:history",
     },
     {
-      title: "Giám sát hoạt động",
-      path: "/real-time",
-      icon: "tabler:device-tv",
-    },
-    {
       title: "Quản lý thiết bị",
       path: "/devices",
       icon: "tabler:door-enter",
+    },
+    {
+      title: "Giám sát hoạt động",
+      path: "/real-time",
+      icon: "tabler:device-tv",
     },
   ];
 };

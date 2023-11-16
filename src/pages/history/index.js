@@ -78,7 +78,7 @@ const HistoryList = () => {
               textDecoration: "none",
             }}
           >
-            {row.role? userRoleObj[row.role].title : ""}
+            {row.role ? userRoleObj[row.role].title : ""}
           </Typography>
         );
       },
@@ -98,6 +98,44 @@ const HistoryList = () => {
             }}
           >
             {row.done ? `${row.new_balance} VNĐ` : `${row.old_balance} VNĐ`}
+          </Typography>
+        );
+      },
+    },
+    {
+      flex: 0.15,
+      minWidth: 180,
+      field: "gate_in",
+      headerName: "Cổng vào",
+      renderCell: ({ row }) => {
+        return (
+          <Typography
+            noWrap
+            sx={{
+              fontWeight: 500,
+              textDecoration: "none",
+            }}
+          >
+            {row.gateIn ? row.gateIn : ""}
+          </Typography>
+        );
+      },
+    },
+    {
+      flex: 0.15,
+      minWidth: 180,
+      field: "gate_out",
+      headerName: "Cổng ra",
+      renderCell: ({ row }) => {
+        return (
+          <Typography
+            noWrap
+            sx={{
+              fontWeight: 500,
+              textDecoration: "none",
+            }}
+          >
+            {row.gateOut ? row.gateOut : "Chưa ra"}
           </Typography>
         );
       },
