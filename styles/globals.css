@@ -22,3 +22,19 @@ code:not([class*='language-']):after {
 code[class*='language-'] {
   padding: 0;
 }
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px rgba(115, 103, 240, 1);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(115, 103, 240, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(115, 103, 240, 1);
+  }
+}
+
+.glowing-card {
+  animation: glow 1s infinite;
+}

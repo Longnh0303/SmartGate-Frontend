@@ -24,11 +24,14 @@ const userRoleObj = {
 };
 
 const YourComponent = () => {
+
+
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(null);
   const [cardInfo, setCardInfo] = useState([]);
   const [deviceList, setDeviceList] = useState(null);
   const [watchingDevice, setWatchingDevice] = useState("");
+  const [latestCardIndex, setLatestCardIndex] = useState(null);
 
   const joinRoom = (socket_room) => {
     socket.emit("request-join-room", socket_room);
@@ -37,7 +40,12 @@ const YourComponent = () => {
   const leaveRoom = (socket_room) => {
     socket.emit("request-leave-room", socket_room);
   };
-
+  useEffect(() => {
+    // Update latest card index when cardInfo changes
+    if (cardInfo &&cardInfo.length > 0) {
+      setLatestCardIndex(cardInfo.length - 1);
+    }
+  }, [cardInfo]);
   useEffect(() => {
     const fetchDevices = async () => {
       try {
@@ -214,7 +222,16 @@ const YourComponent = () => {
                   <Grid item xs={6} sm={3} key={index}>
                     <Grid container spacing={6}>
                       <Grid item xs={12}>
-                        <Card>
+                        <Card
+                          className={latestCardIndex === index ? "glowing-card" : ""}
+                          sx={{
+                            boxShadow:
+                              latestCardIndex === index
+                                ? `0px 0px 10px 2px rgba(115, 103, 240, 1)` // Màu mới
+                                : 'none',
+                          }}
+                    
+                        >
                           <CardContent>
                             <Box sx={{ mb: 6 }}>
                               <Typography
