@@ -85,6 +85,8 @@ const SidebarAddUser = (props) => {
           }
         });
       } catch (error) {
+        toggle();
+        reset();
         setLoading(false);
       }
     },

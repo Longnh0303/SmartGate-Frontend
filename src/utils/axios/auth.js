@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAccessToken } from "../localStorage";
+import { toast } from "react-hot-toast";
 
 export const AuthService = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -28,6 +29,7 @@ AuthService.interceptors.response.use(
     return response.data;
   },
   async (error) => {
+    toast.error(error.response.data.message || "Network Error");
     return Promise.reject(error);
   }
 );
