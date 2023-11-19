@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import AnalyticsVisits from "./components/AnalyticsVisits";
 import AutoMoney from "./components/AutoMoney";
 import RoleVisitsChart from "./components/RoleVisitsChart";
+import VisitsChart from "./components/VisitsChart";
 
 const Home = () => {
   return (
@@ -32,7 +33,7 @@ const Home = () => {
             <RoleVisitsChart></RoleVisitsChart>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <RoleVisitsChart></RoleVisitsChart>
+            <VisitsChart></VisitsChart>
           </Grid>
         </Grid>
       </Grid>
