@@ -1,66 +1,66 @@
 // ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { hexToRGBA } from "src/@core/utils/hex-to-rgba";
 
 const IconButton = {
   MuiIconButton: {
     variants: [
       {
-        props: { color: 'primary' },
+        props: { color: "primary" },
         style: ({ theme }) => ({
-          '&:hover': {
-            backgroundColor: hexToRGBA(theme.palette.primary.main, 0.08)
-          }
-        })
+          "&:hover": {
+            backgroundColor: hexToRGBA(theme.palette.primary.main, 0.08),
+          },
+        }),
       },
       {
-        props: { color: 'secondary' },
+        props: { color: "secondary" },
         style: ({ theme }) => ({
-          '&:hover': {
-            backgroundColor: hexToRGBA(theme.palette.secondary.main, 0.08)
-          }
-        })
+          "&:hover": {
+            backgroundColor: hexToRGBA(theme.palette.secondary.main, 0.08),
+          },
+        }),
       },
       {
-        props: { color: 'success' },
+        props: { color: "success" },
         style: ({ theme }) => ({
-          '&:hover': {
-            backgroundColor: hexToRGBA(theme.palette.success.main, 0.08)
-          }
-        })
+          "&:hover": {
+            backgroundColor: hexToRGBA(theme.palette.success.main, 0.08),
+          },
+        }),
       },
       {
-        props: { color: 'error' },
+        props: { color: "error" },
         style: ({ theme }) => ({
-          '&:hover': {
-            backgroundColor: hexToRGBA(theme.palette.error.main, 0.08)
-          }
-        })
+          "&:hover": {
+            backgroundColor: hexToRGBA(theme.palette.error.main, 0.08),
+          },
+        }),
       },
       {
-        props: { color: 'warning' },
+        props: { color: "warning" },
         style: ({ theme }) => ({
-          '&:hover': {
-            backgroundColor: hexToRGBA(theme.palette.warning.main, 0.08)
-          }
-        })
+          "&:hover": {
+            backgroundColor: hexToRGBA(theme.palette.warning.main, 0.08),
+          },
+        }),
       },
       {
-        props: { color: 'info' },
+        props: { color: "info" },
         style: ({ theme }) => ({
-          '&:hover': {
-            backgroundColor: hexToRGBA(theme.palette.info.main, 0.08)
-          }
-        })
-      }
+          "&:hover": {
+            backgroundColor: hexToRGBA(theme.palette.info.main, 0.08),
+          },
+        }),
+      },
     ],
     styleOverrides: {
       root: ({ theme }) => ({
-        '&:hover': {
-          backgroundColor: `rgba(${theme.palette.customColors.main}, 0.08)`
-        }
-      })
-    }
-  }
-}
+        "&:hover": {
+          backgroundColor: `rgba(${theme.palette.customColors.main}, 0.08)`,
+        },
+      }),
+    },
+  },
+};
 
-export default IconButton
+export default IconButton;

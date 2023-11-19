@@ -170,7 +170,7 @@ const UserThemeOptions = () => {
       appBar: 1200,
       drawer: 1100
     } */
-  }
-}
+  };
+};
 
-export default UserThemeOptions
+export default UserThemeOptions;

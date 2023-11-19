@@ -1,26 +1,26 @@
 // ** MUI Imports
-import { styled } from '@mui/material/styles'
-import MuiSwipeableDrawer from '@mui/material/SwipeableDrawer'
+import { styled } from "@mui/material/styles";
+import MuiSwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 const SwipeableDrawer = styled(MuiSwipeableDrawer)({
-  overflowX: 'hidden',
-  transition: 'width .25s ease-in-out',
-  '& ul': {
-    listStyle: 'none'
+  overflowX: "hidden",
+  transition: "width .25s ease-in-out",
+  "& ul": {
+    listStyle: "none",
   },
-  '& .MuiListItem-gutters': {
+  "& .MuiListItem-gutters": {
     paddingLeft: 4,
-    paddingRight: 4
+    paddingRight: 4,
   },
-  '& .MuiDrawer-paper': {
-    left: 'unset',
-    right: 'unset',
-    overflowX: 'hidden',
-    transition: 'width .25s ease-in-out, box-shadow .25s ease-in-out'
-  }
-})
+  "& .MuiDrawer-paper": {
+    left: "unset",
+    right: "unset",
+    overflowX: "hidden",
+    transition: "width .25s ease-in-out, box-shadow .25s ease-in-out",
+  },
+});
 
-const Drawer = props => {
+const Drawer = (props) => {
   // ** Props
   const {
     hidden,
@@ -33,12 +33,12 @@ const Drawer = props => {
     navMenuProps,
     setNavVisible,
     collapsedNavWidth,
-    navigationBorderWidth
-  } = props
+    navigationBorderWidth,
+  } = props;
 
   // ** Vars
-  const { skin, navCollapsed } = settings
-  let flag = true
+  const { skin, navCollapsed } = settings;
+  let flag = true;
 
   // Drawer Props for Mobile & Tablet screens
   const MobileDrawerProps = {
@@ -46,9 +46,9 @@ const Drawer = props => {
     onOpen: () => setNavVisible(true),
     onClose: () => setNavVisible(false),
     ModalProps: {
-      keepMounted: true // Better open performance on mobile.
-    }
-  }
+      keepMounted: true, // Better open performance on mobile.
+    },
+  };
 
   // Drawer Props for Laptop & Desktop screens
   const DesktopDrawerProps = {
@@ -58,53 +58,55 @@ const Drawer = props => {
     onMouseEnter: () => {
       // Declared flag to resolve first time flicker issue while trying to collapse the menu
       if (flag || navCollapsed) {
-        setNavHover(true)
-        flag = false
+        setNavHover(true);
+        flag = false;
       }
     },
     onMouseLeave: () => {
       if (navCollapsed) {
-        setNavHover(false)
+        setNavHover(false);
       }
-    }
-  }
-  let userNavMenuStyle = {}
-  let userNavMenuPaperStyle = {}
+    },
+  };
+  let userNavMenuStyle = {};
+  let userNavMenuPaperStyle = {};
   if (navMenuProps && navMenuProps.sx) {
-    userNavMenuStyle = navMenuProps.sx
+    userNavMenuStyle = navMenuProps.sx;
   }
   if (navMenuProps && navMenuProps.PaperProps && navMenuProps.PaperProps.sx) {
-    userNavMenuPaperStyle = navMenuProps.PaperProps.sx
+    userNavMenuPaperStyle = navMenuProps.PaperProps.sx;
   }
-  const userNavMenuProps = Object.assign({}, navMenuProps)
-  delete userNavMenuProps.sx
-  delete userNavMenuProps.PaperProps
+  const userNavMenuProps = Object.assign({}, navMenuProps);
+  delete userNavMenuProps.sx;
+  delete userNavMenuProps.PaperProps;
 
   return (
     <SwipeableDrawer
-      className='layout-vertical-nav'
-      variant={hidden ? 'temporary' : 'permanent'}
+      className="layout-vertical-nav"
+      variant={hidden ? "temporary" : "permanent"}
       {...(hidden ? { ...MobileDrawerProps } : { ...DesktopDrawerProps })}
       PaperProps={{
         sx: {
-          backgroundColor: 'background.paper',
-          ...(!hidden && skin !== 'bordered' && { boxShadow: 2 }),
+          backgroundColor: "background.paper",
+          ...(!hidden && skin !== "bordered" && { boxShadow: 2 }),
           width: navCollapsed && !navHover ? collapsedNavWidth : navWidth,
-          borderRight: theme =>
-            navigationBorderWidth === 0 ? 0 : `${navigationBorderWidth}px solid ${theme.palette.divider}`,
-          ...userNavMenuPaperStyle
+          borderRight: (theme) =>
+            navigationBorderWidth === 0
+              ? 0
+              : `${navigationBorderWidth}px solid ${theme.palette.divider}`,
+          ...userNavMenuPaperStyle,
         },
-        ...navMenuProps?.PaperProps
+        ...navMenuProps?.PaperProps,
       }}
       sx={{
         width: navCollapsed ? collapsedNavWidth : navWidth,
-        ...userNavMenuStyle
+        ...userNavMenuStyle,
       }}
       {...userNavMenuProps}
     >
       {children}
     </SwipeableDrawer>
-  )
-}
+  );
+};
 
-export default Drawer
+export default Drawer;

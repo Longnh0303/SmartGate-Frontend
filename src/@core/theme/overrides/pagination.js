@@ -1,5 +1,5 @@
 // ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { hexToRGBA } from "src/@core/utils/hex-to-rgba";
 
 const Pagination = () => {
   return {
@@ -8,48 +8,51 @@ const Pagination = () => {
         root: ({ theme }) => ({
           height: 38,
           minWidth: 38,
-          '&:not(.MuiPaginationItem-rounded)': {
-            borderRadius: '50%'
+          "&:not(.MuiPaginationItem-rounded)": {
+            borderRadius: "50%",
           },
-          '&:not(.MuiPaginationItem-outlined):not(.Mui-disabled)': {
-            transition: theme.transitions.create(['color', 'background-color', 'box-shadow'], {
-              duration: 250,
-              easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-            }),
-            '&.Mui-selected': {
-              boxShadow: theme.shadows[2]
-            }
-          }
+          "&:not(.MuiPaginationItem-outlined):not(.Mui-disabled)": {
+            transition: theme.transitions.create(
+              ["color", "background-color", "box-shadow"],
+              {
+                duration: 250,
+                easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+              }
+            ),
+            "&.Mui-selected": {
+              boxShadow: theme.shadows[2],
+            },
+          },
         }),
         sizeSmall: {
           height: 28,
           minWidth: 28,
-          borderRadius: 4
+          borderRadius: 4,
         },
         sizeLarge: {
           height: 48,
           minWidth: 48,
-          borderRadius: 8
+          borderRadius: 8,
         },
         ellipsis: {
-          height: 'auto'
+          height: "auto",
         },
         outlined: ({ theme }) => ({
-          borderColor: `rgba(${theme.palette.customColors.main}, 0.2)`
+          borderColor: `rgba(${theme.palette.customColors.main}, 0.2)`,
         }),
         outlinedPrimary: ({ theme }) => ({
-          '&.Mui-selected': {
-            backgroundColor: hexToRGBA(theme.palette.primary.main, 0.16)
-          }
+          "&.Mui-selected": {
+            backgroundColor: hexToRGBA(theme.palette.primary.main, 0.16),
+          },
         }),
         outlinedSecondary: ({ theme }) => ({
-          '&.Mui-selected': {
-            backgroundColor: hexToRGBA(theme.palette.secondary.main, 0.16)
-          }
-        })
-      }
-    }
-  }
-}
+          "&.Mui-selected": {
+            backgroundColor: hexToRGBA(theme.palette.secondary.main, 0.16),
+          },
+        }),
+      },
+    },
+  };
+};
 
-export default Pagination
+export default Pagination;

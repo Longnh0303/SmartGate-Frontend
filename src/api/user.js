@@ -4,7 +4,7 @@ export function getUsers(params) {
   return AuthService({
     url: "/users",
     method: "get",
-    params: params
+    params: params,
   });
 }
 

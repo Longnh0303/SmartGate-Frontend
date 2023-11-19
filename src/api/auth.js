@@ -19,7 +19,7 @@ export function logOut(data) {
 
 export function getInfoAccount() {
   return AuthService({
-    url: '/account',
-    method: 'get'
-  })
+    url: "/account",
+    method: "get",
+  });
 }

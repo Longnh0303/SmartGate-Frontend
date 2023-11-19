@@ -1,151 +1,187 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment } from "react";
 
 // ** Next Imports
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // ** MUI Imports
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
-import List from '@mui/material/List'
-import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import MuiListItem from '@mui/material/ListItem'
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import List from "@mui/material/List";
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import MuiListItem from "@mui/material/ListItem";
 
 // ** Third Party Imports
-import clsx from 'clsx'
+import clsx from "clsx";
 
 // ** Theme Config Import
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from "src/configs/themeConfig";
 
 // ** Custom Components Imports
-import UserIcon from 'src/layouts/components/UserIcon'
-import Translations from 'src/layouts/components/Translations'
-import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
+import UserIcon from "src/layouts/components/UserIcon";
+import Translations from "src/layouts/components/Translations";
+import CanViewNavLink from "src/layouts/components/acl/CanViewNavLink";
 
 // ** Util Imports
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
-import { handleURLQueries } from 'src/@core/layouts/utils'
+import { hexToRGBA } from "src/@core/utils/hex-to-rgba";
+import { handleURLQueries } from "src/@core/layouts/utils";
 
 const ListItem = styled(MuiListItem)(({ theme }) => ({
-  width: 'auto',
+  width: "auto",
   borderRadius: theme.shape.borderRadius,
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover
+  "&:hover": {
+    backgroundColor: theme.palette.action.hover,
   },
-  '&.active, &.active:hover': {
-    backgroundColor: hexToRGBA(theme.palette.primary.main, 0.08)
+  "&.active, &.active:hover": {
+    backgroundColor: hexToRGBA(theme.palette.primary.main, 0.08),
   },
-  '&.active .MuiTypography-root, &.active .MuiListItemIcon-root': {
-    color: theme.palette.primary.main
+  "&.active .MuiTypography-root, &.active .MuiListItemIcon-root": {
+    color: theme.palette.primary.main,
   },
-  '&.active .MuiTypography-root': {
-    fontWeight: 500
+  "&.active .MuiTypography-root": {
+    fontWeight: 500,
   },
-  '&:focus-visible': {
+  "&:focus-visible": {
     outline: 0,
-    backgroundColor: theme.palette.action.focus
-  }
-}))
+    backgroundColor: theme.palette.action.focus,
+  },
+}));
 
-const HorizontalNavLink = props => {
+const HorizontalNavLink = (props) => {
   // ** Props
-  const { item, settings, hasParent } = props
+  const { item, settings, hasParent } = props;
 
   // ** Hook & Vars
-  const router = useRouter()
-  const { navSubItemIcon, menuTextTruncate } = themeConfig
-  const icon = item.icon ? item.icon : navSubItemIcon
-  const Wrapper = !hasParent ? List : Fragment
+  const router = useRouter();
+  const { navSubItemIcon, menuTextTruncate } = themeConfig;
+  const icon = item.icon ? item.icon : navSubItemIcon;
+  const Wrapper = !hasParent ? List : Fragment;
 
   const isNavLinkActive = () => {
     if (router.pathname === item.path || handleURLQueries(router, item.path)) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
-  }
+  };
 
   return (
     <CanViewNavLink navLink={item}>
-      <Wrapper {...(!hasParent ? { component: 'div', sx: { py: settings.skin === 'bordered' ? 2.625 : 2.75 } } : {})}>
+      <Wrapper
+        {...(!hasParent
+          ? {
+              component: "div",
+              sx: { py: settings.skin === "bordered" ? 2.625 : 2.75 },
+            }
+          : {})}
+      >
         <ListItem
           component={Link}
           disabled={item.disabled}
           {...(item.disabled && { tabIndex: -1 })}
           className={clsx({ active: isNavLinkActive() })}
-          target={item.openInNewTab ? '_blank' : undefined}
-          href={item.path === undefined ? '/' : `${item.path}`}
-          onClick={e => {
+          target={item.openInNewTab ? "_blank" : undefined}
+          href={item.path === undefined ? "/" : `${item.path}`}
+          onClick={(e) => {
             if (item.path === undefined) {
-              e.preventDefault()
-              e.stopPropagation()
+              e.preventDefault();
+              e.stopPropagation();
             }
           }}
           sx={{
-            ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' }),
+            ...(item.disabled
+              ? { pointerEvents: "none" }
+              : { cursor: "pointer" }),
             ...(!hasParent
               ? {
-                  '&.active, &.active:hover': {
-                    boxShadow: theme => `0px 2px 6px ${hexToRGBA(theme.palette.primary.main, 0.48)}`,
-                    background: theme =>
-                      `linear-gradient(72.47deg, ${theme.palette.primary.main} 22.16%, ${hexToRGBA(
+                  "&.active, &.active:hover": {
+                    boxShadow: (theme) =>
+                      `0px 2px 6px ${hexToRGBA(
+                        theme.palette.primary.main,
+                        0.48
+                      )}`,
+                    background: (theme) =>
+                      `linear-gradient(72.47deg, ${
+                        theme.palette.primary.main
+                      } 22.16%, ${hexToRGBA(
                         theme.palette.primary.main,
                         0.7
                       )} 76.47%)`,
-                    '&:focus-visible': {
-                      background: theme =>
-                        `linear-gradient(72.47deg, ${theme.palette.primary.dark} 22.16%, ${hexToRGBA(
+                    "&:focus-visible": {
+                      background: (theme) =>
+                        `linear-gradient(72.47deg, ${
+                          theme.palette.primary.dark
+                        } 22.16%, ${hexToRGBA(
                           theme.palette.primary.dark,
                           0.7
-                        )} 76.47%)`
+                        )} 76.47%)`,
                     },
-                    '& .MuiTypography-root, & .MuiListItemIcon-root': {
-                      color: 'common.white'
-                    }
-                  }
+                    "& .MuiTypography-root, & .MuiListItemIcon-root": {
+                      color: "common.white",
+                    },
+                  },
                 }
               : {
                   mx: 2,
-                  width: theme => `calc(100% - ${theme.spacing(2 * 2)})`,
-                  '&.active, &.active:hover': {
-                    '&:focus-visible': {
-                      backgroundColor: theme => hexToRGBA(theme.palette.primary.main, 0.24)
-                    }
-                  }
-                })
+                  width: (theme) => `calc(100% - ${theme.spacing(2 * 2)})`,
+                  "&.active, &.active:hover": {
+                    "&:focus-visible": {
+                      backgroundColor: (theme) =>
+                        hexToRGBA(theme.palette.primary.main, 0.24),
+                    },
+                  },
+                }),
           }}
         >
-          <Box sx={{ gap: 2, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box
+            sx={{
+              gap: 2,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ...(menuTextTruncate && { overflow: 'hidden' })
+                display: "flex",
+                alignItems: "center",
+                ...(menuTextTruncate && { overflow: "hidden" }),
               }}
             >
-              <ListItemIcon sx={{ mr: 2, color: 'text.secondary' }}>
-                <UserIcon icon={icon} fontSize={icon === navSubItemIcon ? '0.625rem' : '1.375rem'} />
+              <ListItemIcon sx={{ mr: 2, color: "text.secondary" }}>
+                <UserIcon
+                  icon={icon}
+                  fontSize={icon === navSubItemIcon ? "0.625rem" : "1.375rem"}
+                />
               </ListItemIcon>
-              <Typography {...(menuTextTruncate && { noWrap: true })} sx={{ color: 'text.secondary' }}>
+              <Typography
+                {...(menuTextTruncate && { noWrap: true })}
+                sx={{ color: "text.secondary" }}
+              >
                 <Translations text={item.title} />
               </Typography>
             </Box>
             {item.badgeContent ? (
               <Chip
-                size='small'
+                size="small"
                 label={item.badgeContent}
-                color={item.badgeColor || 'primary'}
-                sx={{ height: 22, minWidth: 22, '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' } }}
+                color={item.badgeColor || "primary"}
+                sx={{
+                  height: 22,
+                  minWidth: 22,
+                  "& .MuiChip-label": { px: 1.5, textTransform: "capitalize" },
+                }}
               />
             ) : null}
           </Box>
         </ListItem>
       </Wrapper>
     </CanViewNavLink>
-  )
-}
+  );
+};
 
-export default HorizontalNavLink
+export default HorizontalNavLink;

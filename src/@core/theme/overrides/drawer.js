@@ -1,13 +1,13 @@
-const Drawer = skin => {
+const Drawer = (skin) => {
   return {
     MuiDrawer: {
       styleOverrides: {
         paper: ({ theme }) => ({
-          boxShadow: theme.shadows[skin === 'default' ? 7 : 0]
-        })
-      }
-    }
-  }
-}
+          boxShadow: theme.shadows[skin === "default" ? 7 : 0],
+        }),
+      },
+    },
+  };
+};
 
-export default Drawer
+export default Drawer;

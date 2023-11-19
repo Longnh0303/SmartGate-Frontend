@@ -4,6 +4,9 @@ import AnalyticsVisits from "./components/AnalyticsVisits";
 import AutoMoney from "./components/AutoMoney";
 import RoleVisitsChart from "./components/RoleVisitsChart";
 import VisitsChart from "./components/VisitsChart";
+import TotalMoney from "./components/TotalMoney";
+import ManualMoney from "./components/ManualMoney";
+import TotalVehicle from "./components/TotalVehicle";
 
 const Home = () => {
   return (
@@ -14,16 +17,16 @@ const Home = () => {
             <AnalyticsVisits></AnalyticsVisits>
           </Grid>
           <Grid item xs={6} sm={2}>
-            <AutoMoney></AutoMoney>
+            <TotalMoney></TotalMoney>
           </Grid>
           <Grid item xs={6} sm={2}>
             <AutoMoney></AutoMoney>
           </Grid>
           <Grid item xs={6} sm={2}>
-            <AutoMoney></AutoMoney>
+            <ManualMoney></ManualMoney>
           </Grid>
           <Grid item xs={6} sm={2}>
-            <AutoMoney></AutoMoney>
+            <TotalVehicle></TotalVehicle>
           </Grid>
         </Grid>
       </Grid>

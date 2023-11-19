@@ -25,15 +25,15 @@ const AnalyticsVisits = () => {
     gateOutStats: 0,
   });
 
-  const [selectedOption, setSelectedOption] = useState("All Time");
+  const [selectedOption, setSelectedOption] = useState("Hôm nay");
 
   const getTimeRange = (selectedOption) => {
     switch (selectedOption) {
-      case "Today":
+      case "Hôm nay":
         return "daily";
-      case "This Month":
+      case "Tháng này":
         return "monthly";
-      case "All Time":
+      case "Toàn bộ":
         return "alltime";
       default:
         return "alltime";
@@ -58,37 +58,21 @@ const AnalyticsVisits = () => {
     setSelectedOption(option);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const selectedOption = "All Time"; // Thay đổi giá trị mặc định nếu cần
-        const timeRange = getTimeRange(selectedOption);
-        const result = await getAccessStats({ timeRange });
-        setAccessData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <Card>
       <CardHeader
         action={
           <OptionsMenu
-            options={["Today", "This Month", "All Time"]}
+            options={["Hôm nay", "Tháng này", "Toàn bộ"]}
             iconButtonProps={{ size: "small", sx: { color: "text.disabled" } }}
             handleOptionSelect={handleOptionSelect}
           />
         }
       />
-      <CardContent sx={{ p: (theme) => `${theme.spacing(5)} !important` }}>
+      <CardContent>
         <Box
           sx={{
             gap: 2,
-            mb: 2,
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "space-between",
@@ -103,7 +87,6 @@ const AnalyticsVisits = () => {
         </Box>
         <Box
           sx={{
-            mb: 3.5,
             gap: 2,
             display: "flex",
             alignItems: "center",

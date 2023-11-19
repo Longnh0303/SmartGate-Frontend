@@ -11,11 +11,11 @@ import OptionsMenu from "src/@core/components/option-menu";
 
 //APi imports
 import { useState, useEffect } from "react";
-import { getAutoMoneyStats } from "src/api/statistic";
+import { getTotalMoneyStats } from "src/api/statistic";
 
 const CardStatsVertical = () => {
   const [totalMoneyData, setTotalMoneyData] = useState({
-    autoMoney: 0,
+    totalMoney: 0,
   });
 
   const [selectedOption, setSelectedOption] = useState("Hôm nay");
@@ -37,7 +37,7 @@ const CardStatsVertical = () => {
     const fetchData = async () => {
       try {
         const timeRange = getTimeRange(selectedOption);
-        const result = await getAutoMoneyStats({ timeRange });
+        const result = await getTotalMoneyStats({ timeRange });
         setTotalMoneyData(result);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -73,19 +73,19 @@ const CardStatsVertical = () => {
         <CustomAvatar
           skin="light"
           variant="rounded"
-          color="primary"
+          color="success"
           sx={{ mb: 3.5, width: 44, height: 44 }}
         >
-          <Icon icon="tabler:credit-card" fontSize="1.75rem" />
+          <Icon icon="tabler:currency-dollar" fontSize="1.75rem" />
         </CustomAvatar>
         <Typography variant="h5" sx={{ mb: 1 }}>
-          Thu tự động
+          Số tiền đã thu
         </Typography>
         <Typography variant="body2" sx={{ mb: 1, color: "text.disabled" }}>
           {selectedOption}
         </Typography>
         <Typography sx={{ mb: 3.5, color: "text.secondary" }}>
-          {totalMoneyData.autoMoney} VNĐ
+          {totalMoneyData.totalMoney} VNĐ
         </Typography>
       </CardContent>
     </Card>

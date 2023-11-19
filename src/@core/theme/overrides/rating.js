@@ -4,13 +4,13 @@ const Rating = () => {
       styleOverrides: {
         root: ({ theme }) => ({
           color: theme.palette.warning.main,
-          '& svg': {
-            flexShrink: 0
-          }
-        })
-      }
-    }
-  }
-}
+          "& svg": {
+            flexShrink: 0,
+          },
+        }),
+      },
+    },
+  };
+};
 
-export default Rating
+export default Rating;

@@ -1,40 +1,43 @@
 // ** MUI Components
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { styled, useTheme } from '@mui/material/styles'
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { styled, useTheme } from "@mui/material/styles";
 
 // Styled Components
-const MaskImg = styled('img')(() => ({
+const MaskImg = styled("img")(() => ({
   bottom: 0,
   zIndex: -1,
   height: 260,
-  width: '100%',
-  position: 'absolute'
-}))
+  width: "100%",
+  position: "absolute",
+}));
 
-const FooterIllustrations = props => {
+const FooterIllustrations = (props) => {
   // ** Props
-  const { image } = props
+  const { image } = props;
 
   // ** Hook
-  const theme = useTheme()
+  const theme = useTheme();
 
   // ** Vars
-  const hidden = useMediaQuery(theme.breakpoints.down('md'))
+  const hidden = useMediaQuery(theme.breakpoints.down("md"));
   if (!hidden) {
     return (
       <>
         {!image ? (
-          <MaskImg alt='mask' src={`/images/pages/misc-mask-${theme.palette.mode}.png`} />
-        ) : typeof image === 'string' ? (
-          <MaskImg alt='mask' src={image} />
+          <MaskImg
+            alt="mask"
+            src={`/images/pages/misc-mask-${theme.palette.mode}.png`}
+          />
+        ) : typeof image === "string" ? (
+          <MaskImg alt="mask" src={image} />
         ) : (
           image
         )}
       </>
-    )
+    );
   } else {
-    return null
+    return null;
   }
-}
+};
 
-export default FooterIllustrations
+export default FooterIllustrations;

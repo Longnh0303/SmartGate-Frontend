@@ -1,63 +1,68 @@
-import axios from 'axios'
-import jwt_decode from 'jwt-decode'
-import { refreshTokens } from 'src/api/auth'
-import { isExpired } from 'src/utils/base'
-import { getAccessToken, getRefreshToken, setAccessToken, setRefreshToken } from '../localStorage'
-import { toast } from 'react-hot-toast'
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import { refreshTokens } from "src/api/auth";
+import { isExpired } from "src/utils/base";
+import {
+  getAccessToken,
+  getRefreshToken,
+  setAccessToken,
+  setRefreshToken,
+} from "../localStorage";
+import { toast } from "react-hot-toast";
 
 export const AuthService = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 20000
-})
+  timeout: 20000,
+});
 
 AuthService.interceptors.request.use(
-  async config => {
+  async (config) => {
     // Lấy refresh token từ LS
-    const refreshToken = getRefreshToken()
+    const refreshToken = getRefreshToken();
     if (refreshToken) {
-      let expRefreshToken = jwt_decode(refreshToken).exp
+      let expRefreshToken = jwt_decode(refreshToken).exp;
       if (!isExpired(expRefreshToken)) {
-        const accessToken = getAccessToken()
+        const accessToken = getAccessToken();
         if (!accessToken) {
           await refreshTokens({
-            refreshToken
-          }).then(res => {
-            setAccessToken(res.access.token)
-            setRefreshToken(res.refresh.token)
-          })
+            refreshToken,
+          }).then((res) => {
+            setAccessToken(res.access.token);
+            setRefreshToken(res.refresh.token);
+          });
         } else {
-          let dateTimeExpToken = jwt_decode(accessToken).exp
+          let dateTimeExpToken = jwt_decode(accessToken).exp;
           if (isExpired(dateTimeExpToken)) {
             // Handle refresh tokens
             await refreshTokens({
-              refreshToken
-            }).then(res => {
-              setAccessToken(res.access.token)
-              setRefreshToken(res.refresh.token)
-            })
+              refreshToken,
+            }).then((res) => {
+              setAccessToken(res.access.token);
+              setRefreshToken(res.refresh.token);
+            });
           }
         }
-        config.headers.Authorization = 'Bearer ' + getAccessToken()
+        config.headers.Authorization = "Bearer " + getAccessToken();
       }
     }
 
-    return config
+    return config;
   },
-  error => {
-    console.log(error)
+  (error) => {
+    console.log(error);
 
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);
 
 AuthService.interceptors.response.use(
-  response => {
-    return response.data
+  (response) => {
+    return response.data;
   },
-  async error => {
-    console.log(error)
-    toast.error(error.response.data.message || 'Network Error')
+  async (error) => {
+    console.log(error);
+    toast.error(error.response.data.message || "Network Error");
 
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
-)
+);

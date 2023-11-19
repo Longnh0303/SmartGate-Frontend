@@ -208,7 +208,7 @@ const HistoryList = () => {
   const handleFilter = useCallback((val) => {
     setValue(val);
     valueRef.current = val;
-}, []);
+  }, []);
 
   return (
     <Grid container spacing={6.5}>
@@ -234,8 +234,8 @@ const HistoryList = () => {
 };
 
 HistoryList.acl = {
-  action: 'read',
-  subject: 'history-page'
-}
+  action: "read",
+  subject: "history-page",
+};
 
-export default HistoryList
+export default HistoryList;

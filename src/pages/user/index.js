@@ -291,10 +291,10 @@ const UserList = () => {
   }, [fetchData]);
 
   const handleFilter = useCallback((val) => {
-      setValue(val);
-      valueRef.current = val;
+    setValue(val);
+    valueRef.current = val;
   }, []);
-  
+
   const toggleAddUserDrawer = () => setAddUserOpen(!addUserOpen);
 
   return (

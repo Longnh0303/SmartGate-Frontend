@@ -24,8 +24,6 @@ const userRoleObj = {
 };
 
 const RealtimePage = () => {
-
-
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(null);
   const [cardInfo, setCardInfo] = useState([]);
@@ -42,7 +40,7 @@ const RealtimePage = () => {
   };
   useEffect(() => {
     // Update latest card index when cardInfo changes
-    if (cardInfo &&cardInfo.length > 0) {
+    if (cardInfo && cardInfo.length > 0) {
       setLatestCardIndex(cardInfo.length - 1);
     }
   }, [cardInfo]);
@@ -223,14 +221,15 @@ const RealtimePage = () => {
                     <Grid container spacing={6}>
                       <Grid item xs={12}>
                         <Card
-                          className={latestCardIndex === index ? "glowing-card" : ""}
+                          className={
+                            latestCardIndex === index ? "glowing-card" : ""
+                          }
                           sx={{
                             boxShadow:
                               latestCardIndex === index
                                 ? `0px 0px 10px 2px rgba(115, 103, 240, 1)` // Màu mới
-                                : 'none',
+                                : "none",
                           }}
-                    
                         >
                           <CardContent>
                             <Box sx={{ mb: 6 }}>
@@ -616,8 +615,8 @@ const RealtimePage = () => {
 };
 
 RealtimePage.acl = {
-  action: 'read',
-  subject: 'real-time-page'
-}
+  action: "read",
+  subject: "real-time-page",
+};
 
-export default RealtimePage
+export default RealtimePage;
