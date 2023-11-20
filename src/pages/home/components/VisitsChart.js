@@ -1,15 +1,52 @@
-// ** MUI Imports
+import { useState, useEffect } from "react";
+import { getDevices } from "src/api/device";
+import { getColumnChartStats } from "src/api/statistic";
 import Card from "@mui/material/Card";
 import { useTheme } from "@mui/material/styles";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-
-// ** Component Import
 import ReactApexcharts from "src/@core/components/react-apexcharts";
 import OptionsMenu from "src/@core/components/option-menu";
 
 const ApexColumnChart = () => {
-  // ** Hook
+  const [chartData, setChartData] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("Hôm nay");
+
+  const getTimeRange = (selectedOption) => {
+    switch (selectedOption) {
+      case "Hôm nay":
+        return "daily";
+      case "Tháng này":
+        return "monthly";
+      case "Toàn bộ":
+        return "alltime";
+      default:
+        return "alltime";
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const timeRange = getTimeRange(selectedOption);
+        const result = await getColumnChartStats({ timeRange });
+        const devices = await getDevices();
+        const categoryList = devices.map((device) => device.mac);
+        setCategory(categoryList);
+        setChartData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [selectedOption]);
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+  };
+
   const theme = useTheme();
 
   const options = {
@@ -23,7 +60,7 @@ const ApexColumnChart = () => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "40%", // Điều chỉnh khoảng cách giữa các cột, giảm để các cột gần nhau hơn
+        columnWidth: "40%",
         endingShape: "rounded",
       },
     },
@@ -36,7 +73,7 @@ const ApexColumnChart = () => {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: ["Port 1", "Port 2"],
+      categories: category,
     },
     yaxis: {
       title: {
@@ -51,27 +88,28 @@ const ApexColumnChart = () => {
 
   const series = [
     {
-      name: "Port 1",
-      data: [85, null], // Dữ liệu cột thứ nhất và cột thứ hai để tách rời
+      name: "Vào/ra(Lượt)",
+      data: chartData.map((item) => item.data[0]), // Lấy dữ liệu số lượt vào/ra từ chartData
     },
     {
-      name: "Port 2",
-      data: [null, 60], // Dữ liệu cột thứ nhất và cột thứ hai để tách rời
+      name: "Số tiền (nghìn VNĐ)",
+      data: chartData.map((item) => item.data[1] / 1000), // Chia dữ liệu số tiền cho 1000 để đơn vị là nghìn VNĐ
     },
   ];
 
   return (
     <Card>
       <CardHeader
-        title="Port Values"
-        subheader="Values for Port 1 and Port 2"
+        title="Thống kê hoạt động"
+        subheader="Số lượt vào/ra và số tiền đã thu"
         subheaderTypographyProps={{
           sx: { color: (theme) => `${theme.palette.text.disabled} !important` },
         }}
         action={
           <OptionsMenu
-            options={["Last Week", "Last Month", "Last Year"]}
+            options={["Hôm nay", "Tháng này", "Toàn bộ"]}
             iconButtonProps={{ size: "small", sx: { color: "text.disabled" } }}
+            handleOptionSelect={handleOptionSelect}
           />
         }
       />

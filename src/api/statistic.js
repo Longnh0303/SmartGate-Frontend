@@ -39,3 +39,19 @@ export function getTotalVehicle(params) {
     params: params,
   });
 }
+
+export function getColumnChartStats(params) {
+  return AuthService({
+    url: "/statistic/chart/column",
+    method: "get",
+    params: params,
+  });
+}
+
+export function getPieChartStats(params) {
+  return AuthService({
+    url: "/statistic/chart/pie",
+    method: "get",
+    params: params,
+  });
+}

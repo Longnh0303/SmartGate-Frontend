@@ -8,6 +8,10 @@ import CardContent from "@mui/material/CardContent";
 import ReactApexcharts from "src/@core/components/react-apexcharts";
 import OptionsMenu from "src/@core/components/option-menu";
 
+//Api imports
+import { useState, useEffect } from "react";
+import { getPieChartStats } from "src/api/statistic";
+
 const donutColors = {
   series1: "#fdd835",
   series2: "#00d4bd",
@@ -17,12 +21,46 @@ const donutColors = {
 };
 
 const ApexDonutChart = () => {
+  const [selectedOption, setSelectedOption] = useState("Hôm nay");
+  const [chartData, setChartData] = useState([]);
+
+  const getTimeRange = (selectedOption) => {
+    switch (selectedOption) {
+      case "Hôm nay":
+        return "daily";
+      case "Tháng này":
+        return "monthly";
+      case "Toàn bộ":
+        return "alltime";
+      default:
+        return "alltime";
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const timeRange = getTimeRange(selectedOption);
+        const result = await getPieChartStats({ timeRange });
+        setChartData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [selectedOption]);
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+  };
+
   // ** Hook
   const theme = useTheme();
 
   const options = {
     stroke: { width: 0 },
-    labels: ["Operational", "Networking", "Hiring", "R&D"],
+    labels: ["Khách", "Sinh viên", "Giáo viên", "Nhân viên"],
     colors: [
       donutColors.series1,
       donutColors.series5,
@@ -58,8 +96,9 @@ const ApexDonutChart = () => {
             total: {
               show: true,
               fontSize: "1.2rem",
-              label: "Operational",
-              formatter: () => "31%",
+              label: "Tổng Số lượt",
+              formatter: () =>
+                chartData.reduce((acc, currentValue) => acc + currentValue, 0),
               color: theme.palette.text.primary,
             },
           },
@@ -110,25 +149,28 @@ const ApexDonutChart = () => {
   return (
     <Card sx={{ height: "100%" }}>
       <CardHeader
-        title="Expense Ratio"
-        subheader="Spending on various categories"
+        title="Tỉ lệ loại thẻ"
+        subheader="Các loại thẻ vào/ra trên toàn hệ thống"
         subheaderTypographyProps={{
           sx: { color: (theme) => `${theme.palette.text.disabled} !important` },
         }}
         action={
           <OptionsMenu
-            options={["Last Week", "Last Month", "Last Year"]}
+            options={["Hôm nay", "Tháng này", "Toàn bộ"]}
             iconButtonProps={{ size: "small", sx: { color: "text.disabled" } }}
+            handleOptionSelect={handleOptionSelect}
           />
         }
       />
       <CardContent>
-        <ReactApexcharts
-          type="donut"
-          height={400}
-          options={options}
-          series={[85, 16, 50, 50]}
-        />
+        {chartData.length > 0 && (
+          <ReactApexcharts
+            type="donut"
+            height={400}
+            options={options}
+            series={chartData}
+          />
+        )}
       </CardContent>
     </Card>
   );

@@ -178,6 +178,25 @@ const HistoryList = () => {
         );
       },
     },
+    {
+      flex: 0.15,
+      field: "fee",
+      minWidth: 180,
+      headerName: "Thu phí",
+      renderCell: ({ row }) => {
+        return (
+          <Typography
+            noWrap
+            sx={{
+              fontWeight: 500,
+              textDecoration: "none",
+            }}
+          >
+            {row.fee ? row.fee : 0} VNĐ
+          </Typography>
+        );
+      },
+    },
   ];
 
   // ** State
