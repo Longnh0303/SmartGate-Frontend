@@ -5,8 +5,9 @@ import { getRfidByCardId } from "src/api/rfid";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import { DialogActions } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { Grid, Card, Button, Box } from "@mui/material";
+import { Grid, Card, Button, Box, CardHeader } from "@mui/material";
 import { getDevices } from "src/api/device";
 import CustomTextField from "src/@core/components/mui/text-field";
 import MenuItem from "@mui/material/MenuItem";
@@ -30,6 +31,7 @@ const RealtimePage = () => {
   const [deviceList, setDeviceList] = useState(null);
   const [watchingDevice, setWatchingDevice] = useState("");
   const [latestCardIndex, setLatestCardIndex] = useState(null);
+  const [openDialog, setOpenDialog] = useState(true);
 
   const joinRoom = (socket_room) => {
     socket.emit("request-join-room", socket_room);
@@ -94,7 +96,12 @@ const RealtimePage = () => {
     };
   }, []); // Chạy một lần khi component được mount
 
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   const handleDeviceSelect = (event) => {
+    setOpenDialog(false);
     const selectedValue = event.target.value;
     setWatchingDevice(selectedValue);
     const socket_room = `${selectedValue}_status`;
@@ -102,6 +109,7 @@ const RealtimePage = () => {
   };
 
   const handleBack = () => {
+    setOpenDialog(true);
     const socket_room = `${watchingDevice}_status`;
     leaveRoom(socket_room);
     setWatchingDevice("");
@@ -111,6 +119,53 @@ const RealtimePage = () => {
   };
   return (
     <>
+      {!data && (
+        <>
+          <Box sx={{ marginBottom: "22px" }}>
+            <Button
+              variant="contained"
+              onClick={handleBack}
+              startIcon={<ArrowBackIcon />}
+            >
+              Chọn thiết bị
+            </Button>
+          </Box>
+          <Card
+            sx={{
+              height: "75vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CardContent>
+              <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item>
+                  <img
+                    src="/images/avatars/no-connection.png"
+                    alt="Manager Avatar"
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="h4"
+                    align="center"
+                    sx={{ fontWeight: "bold", color: "red" }}
+                  >
+                    Thiết bị đang không hoạt động hoặc bạn chưa chọn thiết bị.
+                    Vui lòng chọn một thiết bị để theo dõi.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </>
+      )}
       {data && (
         <>
           <Box sx={{ marginBottom: "22px" }}>
@@ -119,7 +174,7 @@ const RealtimePage = () => {
               onClick={handleBack}
               startIcon={<ArrowBackIcon />}
             >
-              Chọn thiết bị khác
+              Chọn thiết bị
             </Button>
           </Box>
           <Box>
@@ -587,7 +642,7 @@ const RealtimePage = () => {
         </>
       )}
       {deviceList && (
-        <Dialog open={watchingDevice === ""}>
+        <Dialog open={openDialog}>
           <DialogTitle>Chọn một thiết bị để theo dõi</DialogTitle>
           <DialogContent>
             <CustomTextField
@@ -608,6 +663,11 @@ const RealtimePage = () => {
               ))}
             </CustomTextField>
           </DialogContent>
+          <DialogActions>
+            <Button variant="contained" onClick={handleCloseDialog}>
+              Bỏ qua
+            </Button>
+          </DialogActions>
         </Dialog>
       )}
     </>
