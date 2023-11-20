@@ -69,7 +69,7 @@ const RealtimePage = () => {
           break;
         case "access":
           try {
-            const card = await getRfidByCardId(msg.data.cardId);
+            const card = await getRfidByCardId(msg.data.message.cardId);
             setCardInfo((prevCardInfo) => {
               let updatedCardInfo;
               if (prevCardInfo.length >= 4) {
