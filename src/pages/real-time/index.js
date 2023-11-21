@@ -67,7 +67,7 @@ const RealtimePage = () => {
           setData(msg.data);
           setStatus(JSON.parse(msg.data.message));
           break;
-        case "access":
+        case "access" || "exit":
           try {
             const card = await getRfidByCardId(msg.data.message.cardId);
             setCardInfo((prevCardInfo) => {
