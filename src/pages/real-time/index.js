@@ -130,38 +130,27 @@ const RealtimePage = () => {
               Chọn thiết bị
             </Button>
           </Box>
-          <Card
-            sx={{
-              height: "75vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CardContent>
-              <Grid
-                container
-                justifyContent="center"
-                alignItems="center"
-                spacing={2}
-              >
-                <Grid item>
-                  <img
-                    src="/images/avatars/no-connection.png"
-                    alt="Manager Avatar"
-                  />
-                </Grid>
-                <Grid item>
-                  <Typography
-                    variant="h4"
-                    align="center"
-                    sx={{ fontWeight: "bold", color: "red" }}
-                  >
-                    Thiết bị đang không hoạt động hoặc bạn chưa chọn thiết bị.
-                    Vui lòng chọn một thiết bị để theo dõi.
-                  </Typography>
-                </Grid>
-              </Grid>
+          <Card sx={{ height: "75vh" }}>
+            <CardContent
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <Box>
+                <img
+                  src="/images/avatars/no-connection.png"
+                  alt="Manager Avatar"
+                  style={{ height: "300px" }}
+                />
+                <Typography variant="h4" sx={{ color: "#ff1744", mt: 3 }}>
+                  Thiết bị đang không hoạt động hoặc bạn chưa chọn thiết bị
+                </Typography>
+              </Box>
             </CardContent>
           </Card>
         </>
