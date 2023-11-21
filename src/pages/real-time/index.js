@@ -67,7 +67,23 @@ const RealtimePage = () => {
           setData(msg.data);
           setStatus(JSON.parse(msg.data.message));
           break;
-        case "access" || "exit":
+        case "access":
+          try {
+            const card = await getRfidByCardId(msg.data.message.cardId);
+            setCardInfo((prevCardInfo) => {
+              let updatedCardInfo;
+              if (prevCardInfo.length >= 4) {
+                updatedCardInfo = [...prevCardInfo.slice(1), card];
+              } else {
+                updatedCardInfo = [...prevCardInfo, card];
+              }
+              return updatedCardInfo;
+            });
+          } catch (error) {
+            console.error("Error fetching card information:", error);
+          }
+          break;
+        case "exit":
           try {
             const card = await getRfidByCardId(msg.data.message.cardId);
             setCardInfo((prevCardInfo) => {
