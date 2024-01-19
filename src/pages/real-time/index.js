@@ -159,18 +159,20 @@ const RealtimePage = () => {
             >
               <Box>
                 <img
-                  src="/images/avatars/no-connection.png"
+                  src="/images/avatars/no-connection.png" // Đường dẫn đến ảnh động
                   alt="Manager Avatar"
-                  style={{ height: "300px" }}
+                  style={{ height: "240px" }}
                 />
-                <Typography variant="h4" sx={{ color: "#ff1744", mt: 3 }}>
-                  Thiết bị đang không hoạt động hoặc bạn chưa chọn thiết bị
+                <Typography variant="h4" sx={{ color: "#ff1744", mt: 8 }}>
+                  Không thể kết nối đến thiết bị hoặc bạn chưa chọn thiết bị để
+                  giám sát
                 </Typography>
               </Box>
             </CardContent>
           </Card>
         </>
       )}
+
       {data && (
         <>
           <Box sx={{ marginBottom: "22px" }}>
@@ -647,7 +649,7 @@ const RealtimePage = () => {
         </>
       )}
       {deviceList && (
-        <Dialog open={openDialog}>
+        <Dialog open={openDialog} fullWidth>
           <DialogTitle>Chọn một thiết bị để theo dõi</DialogTitle>
           <DialogContent>
             <CustomTextField
@@ -663,7 +665,9 @@ const RealtimePage = () => {
             >
               {deviceList.map((device) => (
                 <MenuItem key={device.id} value={device.mac}>
-                  {device.mac}
+                  {device.describe
+                    ? `${device.describe}: ${device.mac}`
+                    : device.mac}
                 </MenuItem>
               ))}
             </CustomTextField>

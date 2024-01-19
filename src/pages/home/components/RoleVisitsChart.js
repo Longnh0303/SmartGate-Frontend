@@ -9,7 +9,7 @@ import ReactApexcharts from "src/@core/components/react-apexcharts";
 import OptionsMenu from "src/@core/components/option-menu";
 
 //Api imports
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getPieChartStats } from "src/api/statistic";
 
 const donutColors = {
@@ -23,6 +23,7 @@ const donutColors = {
 const ApexDonutChart = () => {
   const [selectedOption, setSelectedOption] = useState("Hôm nay");
   const [chartData, setChartData] = useState([]);
+  const [renderKey, setRenderKey] = useState(0);
 
   const getTimeRange = (selectedOption) => {
     switch (selectedOption) {
@@ -42,7 +43,7 @@ const ApexDonutChart = () => {
       try {
         const timeRange = getTimeRange(selectedOption);
         const result = await getPieChartStats({ timeRange });
-        setChartData(result);
+        setChartData(result.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -50,6 +51,10 @@ const ApexDonutChart = () => {
 
     fetchData();
   }, [selectedOption]);
+
+  useEffect(() => {
+    setRenderKey((prevKey) => prevKey + 1);
+  }, [chartData]);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -96,7 +101,7 @@ const ApexDonutChart = () => {
             total: {
               show: true,
               fontSize: "1.2rem",
-              label: "Tổng Số lượt",
+              label: "Tổng số lượt",
               formatter: () =>
                 chartData.reduce((acc, currentValue) => acc + currentValue, 0),
               color: theme.palette.text.primary,
@@ -165,6 +170,7 @@ const ApexDonutChart = () => {
       <CardContent>
         {chartData.length > 0 && (
           <ReactApexcharts
+            key={renderKey}
             type="donut"
             height={400}
             options={options}
