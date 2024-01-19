@@ -42,7 +42,7 @@ const ApexDonutChart = () => {
       try {
         const timeRange = getTimeRange(selectedOption);
         const result = await getPieChartStats({ timeRange });
-        setChartData(result.data);
+        setChartData(result);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
