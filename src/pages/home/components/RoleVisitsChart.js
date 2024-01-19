@@ -168,7 +168,7 @@ const ApexDonutChart = () => {
         }
       />
       <CardContent>
-        {chartData.length > 0 && (
+        {chartData && chartData.length > 0 && (
           <ReactApexcharts
             key={renderKey}
             type="donut"
