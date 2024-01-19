@@ -94,11 +94,18 @@ const ApexDonutChart = () => {
               formatter: (val) => `${parseInt(val, 10)}`,
             },
             total: {
-              show: false,
+              show: true,
               fontSize: "1.2rem",
               label: "Tổng số lượt",
-              formatter: () =>
-                chartData.reduce((acc, currentValue) => acc + currentValue, 0),
+              formatter: function (w) {
+                // Calculate total
+                let total = w.globals.seriesTotals.reduce((a, b) => {
+                  return a + b;
+                }, 0);
+
+                // Format total as you wish
+                return `${parseInt(total, 10)}`;
+              },
               color: theme.palette.text.primary,
             },
           },
