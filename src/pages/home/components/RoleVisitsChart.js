@@ -94,7 +94,7 @@ const ApexDonutChart = () => {
               formatter: (val) => `${parseInt(val, 10)}`,
             },
             total: {
-              show: true,
+              show: false,
               fontSize: "1.2rem",
               label: "Tổng số lượt",
               formatter: () =>
