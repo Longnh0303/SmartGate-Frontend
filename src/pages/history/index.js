@@ -173,7 +173,7 @@ const HistoryList = () => {
               textDecoration: "none",
             }}
           >
-            {row.time_check_out ? convertTime(row.time_check_in) : "Chưa ra"}
+            {row.time_check_out ? convertTime(row.time_check_out) : "Chưa ra"}
           </Typography>
         );
       },
